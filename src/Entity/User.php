@@ -7,9 +7,27 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
+#[ApiResource(
+
+    collectionOperations: [
+        'get',
+        'post' => [ "security" => "is_granted('ROLE_USER')"]
+    ],
+    itemOperations: [
+        'get',
+        'put' => [ 'security' => "is_granted('ROLE_USER') and object = user"],
+        'delete' => [ 'security' => "is_granted('ROLE_ADMIN')"]
+    ],
+    attributes: ["security" => "is_granted('ROLE_USER')"],
+    denormalizationContext: [ 'groups' => ['user:write'] ],
+    normalizationContext: [ 'groups' => [ 'user:read'] ],
+
+
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,28 +35,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Groups(['user:write', 'user:read'])]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $uuid;
+    private $username;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
+
     #[ORM\Column(type: 'string')]
     private $password;
+
+    #[Groups(['user:write'])]
+    #[SerializedName("password")]
+    private $plainPassword;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUuid(): ?string
+    public function getUsername(): ?string
     {
-        return $this->uuid;
+        return $this->username;
     }
 
-    public function setUuid(string $uuid): self
+    public function setUsername(string $username): self
     {
-        $this->uuid = $uuid;
+        $this->username = $username;
 
         return $this;
     }
@@ -50,7 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->uuid;
+        return (string) $this->username;
     }
 
     /**
@@ -64,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
+
 
     public function setRoles(array $roles): self
     {
@@ -80,6 +105,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -93,6 +130,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 }
