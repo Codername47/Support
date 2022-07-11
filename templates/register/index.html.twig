@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegisterController!{% endblock %}
+
+{% block body %}
+    <div {{ stimulus_controller('registration') }}>
+        <form action="POST" {{ stimulus_target('registration', 'form') }}>
+            <label for="username">Username: </label>
+            <input type="text" name="uuid" {{ stimulus_target('registration', 'name') }}>
+            <br>
+            <label for="password">Password: </label>
+            <input type="password" name="password" {{ stimulus_target('registration', 'password') }}>
+            <br>
+            <label for="repeatPassword">Repeat Password: </label>
+            <input type="password" name="repeatPassword" {{ stimulus_target('registration', 'repeatPassword') }}>
+            <button type="submit">Go</button>
+        </form>
+        <br>
+        <a href="/login">Вернуться к авторизации</a>
+    </div>
+{% endblock %}
