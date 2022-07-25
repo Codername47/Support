@@ -103,3 +103,12 @@ nav {
     justify-content: center;
 }
 
+.link-page{
+    cursor: pointer;
+    color: #0F83E8;
+}
+
+.link-current-page{
+    cursor: pointer;
+    color: black;
+}

@@ -16,7 +16,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get' => [
             'security' => "is_granted('ROLE_USER')"
         ],
-        'post'
     ],
     itemOperations: [
         'get' => [

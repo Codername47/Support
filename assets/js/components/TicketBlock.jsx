@@ -33,7 +33,7 @@ const TicketBlock = (props) => {
             </div>
             <div className="ticket-info">
                 <div className="ticket-info__username">Пользователь: {props.ticket.owner.username}</div>
-                {countUnreadMessages && <div className="ticket-info__unread">{countUnreadMessages}</div>}
+                {!!countUnreadMessages && <div className="ticket-info__unread">{countUnreadMessages}</div>}
                 <div className="ticket-info__date-update">Обновлено: {props.ticket.dateUpdate}</div>
             </div>
         </div>

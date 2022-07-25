@@ -154,22 +154,27 @@ const Ticket = () => {
                                 Тикет решён!
                             </div>
                     }
-                    {user.roles.includes("ROLE_ADMIN") &&
-                        ticket.status.name == "unsolved" ?
-                        <div>
-                            <button onClick={onFreezeTicket}>Заморозить тикет</button>
-                            <button onClick={onSolveTicket}>Перенести в решённые</button>
-                        </div>
-                        : ticket.status.name == "frozen" ?
-                            <div>
-                                <button onClick={onUnsolveTicket}>Разморозить тикет</button>
-                                <button onClick={onSolveTicket}>Перенести в решенные</button>
-                            </div>
-                        : <div>
-                                <button onClick={onUnsolveTicket}>Перенести в нерешённые</button>
-                            </div>
+                    <div>
+                        {user.roles.includes("ROLE_ADMIN") && ticket.status.name == "unsolved" ?
+                                <div>
+                                    <button onClick={onFreezeTicket}>Заморозить тикет</button>
+                                    <button onClick={onSolveTicket}>Перенести в решённые</button>
+                                </div>
+                            : user.roles.includes("ROLE_ADMIN") && ticket.status.name == "frozen" ?
+                                <div>
+                                    <button onClick={onUnsolveTicket}>Разморозить тикет</button>
+                                    <button onClick={onSolveTicket}>Перенести в решенные</button>
+                                </div>
+                                : user.roles.includes("ROLE_ADMIN") && ticket.status.name == "solved" ?
+                                    <div>
+                                        <button onClick={onUnsolveTicket}>Перенести в нерешённые</button>
+                                    </div>
+                                    : <div></div>
 
-                    }
+
+                        }
+                    </div>
+
                 </div>
 
             }

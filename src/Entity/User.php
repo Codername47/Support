@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
@@ -42,6 +43,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Groups(['user:write', 'user:read', 'message:read', 'ticket:read'])]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Length(
+        min: 4,
+        max: 32,
+        minMessage: "Your username should be at list {{ limit }} characters",
+        maxMessage: 'Your username should be less {{ limit }} characters',
+    )]
     private $username;
 
     #[Groups([ 'user:read', 'message:read', 'ticket:read'])]
@@ -49,9 +56,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
 
+    #[Assert\Length(
+        min: 4,
+        max: 64,
+        minMessage: 'Your password should be at least {{ limit }} characters',
+        maxMessage: 'Your password should be less {{ limit }} characters',
+    )]
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[Assert\Length(
+        min: 6,
+        max: 64,
+        minMessage: 'Your password should be at least {{ limit }} characters',
+        maxMessage: 'Your password should be less {{ limit }} characters',
+    )]
     #[Groups(['user:write'])]
     #[SerializedName("password")]
     private $plainPassword;

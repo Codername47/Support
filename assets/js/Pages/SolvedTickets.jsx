@@ -1,17 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import axios from "axios";
 import {AuthContext} from "../context";
+import axios from "axios";
 import TicketBlock from "../components/TicketBlock";
 import Tickets from "./Tickets";
 
-const MyTickets = () => {
-    const { user } = useContext(AuthContext);
-    let url = "/api/users/"+user.id+"/tickets?page=";
+const SolvedTickets = () => {
     return (
         <div className="tickets-container">
-            <Tickets url={url} name="Замороженные"/>
+            <Tickets url="/api/ticket_statuses/3/tickets?page=" name="Замороженные"/>
         </div>
     );
 };
 
-export default MyTickets;
+export default SolvedTickets;

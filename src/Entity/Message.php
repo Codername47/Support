@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 #[ApiResource(
@@ -35,6 +36,9 @@ class Message
     #[Groups(['message:read'])]
     private $id;
 
+    #[Assert\NotBlank(
+        message: "Message shouldn't be empty."
+    )]
     #[Groups(['message:read', 'message:write'])]
     #[ORM\Column(type: 'text')]
     private $content;
