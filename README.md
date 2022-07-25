@@ -9,6 +9,7 @@
 - make dc_up
 - php bin/console doctrine:create:schema
 - php bin/console doctrine:migrations:migrate
+- php bin/console doctrine:fixtures:load
 # Данные
 Стандартная учетная запись администратора:
 - admin:admin
