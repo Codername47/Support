@@ -36,8 +36,11 @@ class Message
     #[Groups(['message:read'])]
     private $id;
 
-    #[Assert\NotBlank(
-        message: "Message shouldn't be empty."
+    #[Assert\Length(
+        min: 1,
+        max: 88,
+        minMessage: "Message shouldn't be empty.",
+        maxMessage: 'Your message should be less {{ limit }} characters',
     )]
     #[Groups(['message:read', 'message:write'])]
     #[ORM\Column(type: 'text')]

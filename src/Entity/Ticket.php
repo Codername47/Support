@@ -55,15 +55,21 @@ class Ticket
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
-    #[Assert\NotBlank(
-        message: 'Please, enter description.'
+    #[Assert\Length(
+        min: 1,
+        max: 88,
+        minMessage: "Please, enter description",
+        maxMessage: 'Your description should be less {{ limit }} characters',
     )]
     #[Groups(['ticket:read', 'ticket:write'])]
     #[ORM\Column(type: 'string', length: 255)]
     private $description;
 
-    #[Assert\NotBlank(
-        message: 'Please, enter details.'
+    #[Assert\Length(
+        min: 1,
+        max: 512,
+        minMessage: "Please, enter details",
+        maxMessage: 'Your details should be less {{ limit }} characters',
     )]
     #[Groups(['ticket:read', 'ticket:write'])]
     #[ORM\Column(type: 'text')]

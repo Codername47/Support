@@ -13,6 +13,7 @@ const Ticket = () => {
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState("true");
     const [error, setError] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
     const loadTicket = (id) => {
       axios.get(`/api/tickets/${id}`)
           .then(response => {
@@ -67,6 +68,7 @@ const Ticket = () => {
     }
     const onSubmitForm = (e) => {
         e.preventDefault();
+        setErrorMsg("");
         axios.post("/api/messages", {
             content: message,
             ticket: `/api/tickets/${params.id}`
@@ -75,7 +77,7 @@ const Ticket = () => {
             console.log(response.data);
             loadMessages(params.id)
         }).catch(error => {
-            console.log(error.response.data);
+            setErrorMsg(error.response.data["hydra:description"].split(":")[1])
         }).finally(() => {
             console.log('done');
         })
@@ -145,6 +147,7 @@ const Ticket = () => {
                                 <textarea name="content"  className="message-form__input" cols="30" rows="10" value={message} onChange={e => setMessage(e.target.value)}/>
                                 <button>Отправить</button>
                             </form>
+                            {errorMsg != "" && <div className="error">{errorMsg}</div>}
                         </div>
                         : ticket.status.name == "frozen" ?
                             <h2>

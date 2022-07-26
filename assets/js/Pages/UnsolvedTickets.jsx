@@ -7,7 +7,7 @@ import Tickets from "./Tickets";
 const UnsolvedTickets = () => {
     return (
         <div className="tickets-container">
-            <Tickets url="/api/ticket_statuses/1/tickets?page=" name="Замороженные"/>
+            <Tickets url="/api/ticket_statuses/1/tickets?page=" name="Нерешённые"/>
         </div>
     );
 };

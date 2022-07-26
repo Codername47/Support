@@ -9,7 +9,7 @@ const MyTickets = () => {
     let url = "/api/users/"+user.id+"/tickets?page=";
     return (
         <div className="tickets-container">
-            <Tickets url={url} name="Замороженные"/>
+            <Tickets url={url} name="Мои тикеты"/>
         </div>
     );
 };
