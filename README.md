@@ -13,6 +13,7 @@
 - php bin/console doctrine:fixtures:load
 - yarn install
 - yarn watch
+- Сервер развернут на 888 порту (localhost:888)
 # Данные
 Стандартная учетная запись администратора:
 - admin:admin
