@@ -7,6 +7,7 @@
 # Установка
 - composer install
 - make dc_up
+- make app_bash
 - php bin/console doctrine:create:schema
 - php bin/console doctrine:migrations:migrate
 - php bin/console doctrine:fixtures:load
