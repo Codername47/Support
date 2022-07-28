@@ -1,10 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from "../context";
 import {useNavigate} from "react-router-dom";
+import {dateConvert} from "../Functions/DateConvert";
 
 const TicketBlock = (props) => {
     let { user } = useContext(AuthContext);
     let router = useNavigate();
+    let dateCreation = dateConvert(props.ticket.dateCreation);
+    let dateUpdate = dateConvert(props.ticket.dateUpdate);
     let [countMessages, setCountMessages] = useState(0);
     let [countUnreadMessages, setCountUnreadMessages] = useState(0);
     useEffect(()=>{
@@ -29,12 +32,12 @@ const TicketBlock = (props) => {
                 <div className="ticket-content__title">Заголовок: {props.ticket.title}</div>
                 <div className="ticket-content__description">Описание: {props.ticket.description}</div>
                 <div className="ticket-content__messages">Сообщений: {countMessages}</div>
-                <div className="ticket-content__data-creation">Создан: {props.ticket.dateCreation}</div>
+                <div className="ticket-content__data-creation">Создан: {dateCreation}</div>
             </div>
             <div className="ticket-info">
                 <div className="ticket-info__username">Пользователь: {props.ticket.owner.username}</div>
                 {!!countUnreadMessages && <div className="ticket-info__unread">{countUnreadMessages}</div>}
-                <div className="ticket-info__date-update">Обновлено: {props.ticket.dateUpdate}</div>
+                <div className="ticket-info__date-update">Обновлено: {dateUpdate}</div>
             </div>
         </div>
 

@@ -17,4 +17,3 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 /db/
-/db/
